@@ -9,6 +9,7 @@ use App\Http\Livewire\Action;
 use App\Http\Livewire\Product;
 use App\Http\Livewire\Contact;
 use App\Http\Livewire\Users;
+use App\Http\Livewire\Students;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,5 @@ Route::get('/product', Product::class);
 Route::get('/contact', Contact::class);
 
 Route::get('/users', Users::class);
+
+Route::get('/students', Students::class);
