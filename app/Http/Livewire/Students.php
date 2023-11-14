@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Student;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 class Students extends Component
@@ -13,6 +13,15 @@ class Students extends Component
     public $first_name, $last_name, $email, $phone;
 
     public $ids;
+
+    public $search;
+
+    protected $paginationTheme = 'bootstrap';
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function resetInputFields()
     {
@@ -28,7 +37,7 @@ class Students extends Component
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required'
+            'phone' => 'required',
         ]);
 
         Student::create($validatedData);
@@ -55,10 +64,10 @@ class Students extends Component
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required'
+            'phone' => 'required',
         ]);
 
-        if($this->ids) {
+        if ($this->ids) {
             $student = Student::findOrFail($this->ids);
             $student->update($validatedData);
 
@@ -72,7 +81,7 @@ class Students extends Component
 
     public function delete($id)
     {
-        if($id) {
+        if ($id) {
             Student::find($id)->delete();
 
             session()->flash('message', 'Student deleted successful.');
@@ -81,10 +90,15 @@ class Students extends Component
 
     public function render()
     {
-        $students = Student::orderBy('id', 'desc')->paginate(10);
+        $keyword = '%' . $this->search . '%';
+        $students = Student::where('first_name', 'LIKE', $keyword)
+            ->orWhere('last_name', 'LIKE', $keyword)
+            ->orWhere('email', 'LIKE', $keyword)
+            ->orWhere('phone', 'LIKE', $keyword)
+            ->orderBy('id', 'desc')->paginate(5);
 
         return view('livewire.students', [
-            'students' => $students
+            'students' => $students,
         ]);
     }
 }

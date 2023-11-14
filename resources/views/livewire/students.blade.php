@@ -1,9 +1,4 @@
 <div>
-    <style>
-        nav svg{
-            height: 20px;
-        }
-    </style>
     <section>
         @include('livewire.student-create')
         @include('livewire.student-update')
@@ -17,11 +12,18 @@
                     @endif
                     <div class="card">
                         <div class="card-header">
-                            <h3>All Students
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
-                                    Add Student
-                                </button>
-                            </h3>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h3>All Students
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
+                                            Add Student
+                                        </button>
+                                    </h3>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" placeholder="Search..." class="form-control" wire:model="search">
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table class="table table-striped">
